@@ -41,6 +41,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
 
+  .state('app.disaster-select', {
+    url: '/disaster-select',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/disaster-select.html'
+      }
+    }
+  })
+
   .state('app.map', {
     url: '/map',
     views: {

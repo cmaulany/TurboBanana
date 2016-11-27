@@ -69,6 +69,8 @@ angular.module('starter.controllers', [])
   $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
   var latLng;
 
+  var shelterLocations;
+  var shelterCount = 300;
 
   //Get help offerers
   $http.get("data/airbnb.json")
@@ -76,8 +78,10 @@ angular.module('starter.controllers', [])
 
     $scope.geoloc = response.data;
 
+    shelterLocations = $scope.geoloc;
+
     //Add json markers
-    for(var i = 0; i < 300; i++) {
+    for(var i = 0; i < shelterCount; i++) {
       var loc = $scope.geoloc[i];
       latLng = new google.maps.LatLng(loc.latitude, loc.longitude);
       var marker = new google.maps.Marker({
@@ -95,6 +99,21 @@ angular.module('starter.controllers', [])
     console.log("Could not load shelter json");
   });
 
+  var minSqr = function (marker, list) {
+  	var closestElement;
+  	var closestDistance = Number.MAX_VALUE;
+  	for(var i = 0; i < shelterCount; i++) {
+  		var element = list[i];
+  		console.log(marker.LatLng);
+  		var distance = Math.pow(marker.latitude - element.latitude, 2) + Math.pow(marker.longitude - element.longitude, 2);
+  		if (distance < closestDistance) {
+  			closestDistance = distance;
+  			closestElement = element;
+  		}
+  	}
+  	return closestElement;
+  };
+
   $http.get("data/in_need.json")
     .then(function(response) {
 
@@ -109,6 +128,11 @@ angular.module('starter.controllers', [])
         animation: google.maps.Animation.DROP,
         position: latLng,
         icon: 'img/pin_in_need.png'
+      });
+
+      marker.addListener('click', function(self) {
+      	alert(self.latLng);
+      	var closest = minSqr(self.latLng, shelterLocations);
       });
     }
 
