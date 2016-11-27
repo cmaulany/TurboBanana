@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     url: '/search',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/start-screen.html'
       }
     }
   })
@@ -46,6 +46,69 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     views: {
       'menuContent': {
         templateUrl: 'templates/disaster-select.html'
+      }
+    }
+  })
+
+  .state('app.disaster-flow-1', {
+    url: '/disaster-flow/1',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/disaster-flow1.html'
+      }
+    }
+  })
+
+  .state('app.disaster-flow-2', {
+    url: '/disaster-flow/2',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/disaster-flow2.html'
+      }
+    }
+  })
+
+  .state('app.disaster-flow-3', {
+    url: '/disaster-flow/3',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/disaster-flow3.html'
+      }
+    }
+  })
+
+  .state('app.disaster-flow-4', {
+    url: '/disaster-flow/4',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/disaster-flow4.html'
+      }
+    }
+  })
+
+  .state('app.disaster-flow-5', {
+    url: '/disaster-flow/5',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/disaster-flow5.html'
+      }
+    }
+  })
+
+  .state('app.disaster-flow-6', {
+    url: '/disaster-flow/6',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/disaster-flow6.html'
+      }
+    }
+  })
+
+  .state('app.disaster-flow-7', {
+    url: '/disaster-flow/7',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/disaster-flow7.html'
       }
     }
   })
@@ -61,22 +124,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   })
 
   .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
+  url: '/browse',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/browse.html'
       }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
+    }
+  })
+  .state('app.playlists', {
+    url: '/playlists',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/start-screen.html'
       }
-    })
+    }
+  })
 
   .state('app.single', {
     url: '/playlists/:playlistId',

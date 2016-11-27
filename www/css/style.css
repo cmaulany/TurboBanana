@@ -34,6 +34,20 @@ h1.title {
 	color: #FFF !important;
 }
 
+.turbo-margin {
+	margin: 60px 30px;
+	font-size: 30pt;
+	line-height: 30pt;
+}
+
+.turbo-screen-button {
+	background-color: #9ba7ad;
+	float: left;
+	margin-right: 40px;
+	padding: 20px 40px;
+	color: #FFF;
+}
+
 .turbo-button {
 	color: #FFF;
 	text-transform: uppercase;
@@ -41,7 +55,8 @@ h1.title {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 20pt;
+	font-size: 30pt;
+	line-height: 30pt;
 }
 
 a.turbo {

@@ -71,6 +71,7 @@ angular.module('starter.controllers', [])
 
   var shelterLocations;
   var shelterCount = 300;
+  var shelterMarkers = [];
 
   //Get help offerers
   $http.get("data/airbnb.json")
@@ -79,65 +80,89 @@ angular.module('starter.controllers', [])
     $scope.geoloc = response.data;
 
     shelterLocations = $scope.geoloc;
-
     //Add json markers
     for(var i = 0; i < shelterCount; i++) {
       var loc = $scope.geoloc[i];
       latLng = new google.maps.LatLng(loc.latitude, loc.longitude);
-      var marker = new google.maps.Marker({
+      shelterMarkers[i] = new google.maps.Marker({
         map: $scope.map,
         animation: google.maps.Animation.DROP,
         position: latLng,
+        label: 'Shelter',
         icon: 'img/pin_shelter.png'
       });
     }
 
     //Center to last node
-    $scope.map.setCenter(latLng);
+    //$scope.map.setCenter(latLng);
 
   }, function(error){
     console.log("Could not load shelter json");
   });
 
-  var minSqr = function (marker, list) {
+  var minSqr = function (lat, lng, list) {
   	var closestElement;
   	var closestDistance = Number.MAX_VALUE;
   	for(var i = 0; i < shelterCount; i++) {
-  		var element = list[i];
-  		console.log(marker.LatLng);
-  		var distance = Math.pow(marker.latitude - element.latitude, 2) + Math.pow(marker.longitude - element.longitude, 2);
+  		var element = shelterLocations[i];
+  		var distance = Math.pow(lat - element.latitude, 2) + Math.pow(lng - element.longitude, 2);
   		if (distance < closestDistance) {
   			closestDistance = distance;
-  			closestElement = element;
+  			closestElement = shelterMarkers[i];
   		}
   	}
   	return closestElement;
   };
 
+  var inNeedMarkers = [];
+  var inNeedCount;
+
   $http.get("data/in_need.json")
     .then(function(response) {
 
     $scope.geoloc = response.data;
+    inNeedCount = $scope.geoloc.length;
 
     //Add json markers
     for(var i = 0; i < $scope.geoloc.length; i++) {
       var marker = $scope.geoloc[i];
       latLng = new google.maps.LatLng(marker.latitude, marker.longitude);
-      var marker = new google.maps.Marker({
-        map: $scope.map,
-        animation: google.maps.Animation.DROP,
-        position: latLng,
-        icon: 'img/pin_in_need.png'
-      });
-
+      if(i == $scope.geoloc.length - 1) {
+	     marker = new google.maps.Marker({
+	        map: $scope.map,
+	        animation: google.maps.Animation.DROP,
+	        position: latLng,
+	        label: "You",
+	        icon: 'img/pin_in_need.png'
+	      });
+	  } else {
+	  	marker = new google.maps.Marker({
+	        map: $scope.map,
+	        animation: google.maps.Animation.DROP,
+	        position: latLng,
+	        icon: 'img/pin_in_need.png'
+	      });
+	  }
+      inNeedMarkers[i] = marker;
       marker.addListener('click', function(self) {
-      	alert(self.latLng);
-      	var closest = minSqr(self.latLng, shelterLocations);
+      	// for(var i = 0; i < inNeedCount; i++) {
+      	// 	if(inNeedMarkers[i].)
+      	// 	inNeedMarkers[i].setMap(null);
+      	// }
+
+      	var closest = minSqr(self.latLng[Object.keys(self.latLng)[0]](), self.latLng[Object.keys(self.latLng)[1]](), shelterLocations);
+      	//alert(closest);
+      	for(var i = 0; i < shelterCount; i++) {
+      		shelterMarkers[i].setMap(null);
+      	}
+      	closest.setMap($scope.map);
+
       });
+      $scope.map.setCenter(latLng);
     }
 
     //Center to last node
-    $scope.map.setCenter(latLng);
+    //$scope.map.setCenter(latLng);
 
   }, function(error){
     console.log("Could not load in need json");
